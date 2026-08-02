@@ -6,9 +6,8 @@ class Solution {
         while(n>0){
             rem=n%10;
             if(rem>max1){
-                temp=max1;
+                max2=max1;
                 max1=rem;
-                max2=temp;
             }
             else if(rem>max2){
                 max2=rem;
