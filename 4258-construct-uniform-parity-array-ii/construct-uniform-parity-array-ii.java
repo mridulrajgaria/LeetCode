@@ -1,25 +1,20 @@
 class Solution {
-    int inf = (int) 1e9; 
     public boolean uniformArray(int[] nums1) {
-        // ALL EVEN - TRUE 
-        // ALL ODD - TRUE 
-        // WHEN MIXED 
-        // We can only subtract strictly smaller 
-        
-        boolean odd = false, even = false; 
-        int mn = inf; 
-        for(int i = 0; i < nums1.length; i++) {
-            if(nums1[i] % 2 == 0) even |= true; 
-            else odd |= true; 
-            mn = Math.min(mn, nums1[i]); 
+
+        int minOdd = Integer.MAX_VALUE;
+
+        for (int x : nums1) {
+            if (x % 2 == 1) {
+                minOdd = Math.min(minOdd, x);
+            }
         }
 
-        if(!odd || !even) return true; // only 1 kind in array 
+        for (int x : nums1) {
+            if (x % 2 == 0 && minOdd != Integer.MAX_VALUE && x < minOdd) {
+                return false;
+            }
+        }
 
-
-
-
-
-return mn % 2 == 1; 
+        return true;
     }
 }
