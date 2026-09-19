@@ -1,32 +1,54 @@
 class Solution {
-    public boolean canPartition(int[] nums) {
 
-        int total = 0;
+    public boolean canPartition(int[] arr) {
 
-        for (int x : nums) {
-            total += x;
+        int n = arr.length;
+
+        // Step 1: Calculate total sum
+        int sum = 0;
+
+        for (int x : arr) {
+            sum += x;
         }
 
-        // Odd total cannot be divided equally
-        if (total % 2 != 0) {
+        // Step 2: Odd total cannot be divided equally
+        if (sum % 2 != 0) {
             return false;
         }
 
-        int target = total / 2;
+        // Step 3: Find a subset with sum = total / 2
+        int target = sum / 2;
 
-        boolean[] dp = new boolean[target + 1];
-        dp[0] = true;
+        return subsetSum(arr, target);
+    }
 
-        for (int x : nums) {
+    private boolean subsetSum(int[] arr, int sum) {
 
-            for (int j = target; j >= x; j--) {
+        int n = arr.length;
 
-                if (dp[j - x]) {
-                    dp[j] = true;
+        boolean[][] t = new boolean[n + 1][sum + 1];
+
+        // Sum 0 is always possible
+        for (int i = 0; i <= n; i++) {
+            t[i][0] = true;
+        }
+
+        for (int i = 1; i <= n; i++) {
+            for (int j = 1; j <= sum; j++) {
+
+                if (arr[i - 1] <= j) {
+
+                    t[i][j] =
+                        t[i - 1][j] ||
+                        t[i - 1][j - arr[i - 1]];
+
+                } else {
+
+                    t[i][j] = t[i - 1][j];
                 }
             }
         }
 
-        return dp[target];
+        return t[n][sum];
     }
 }
